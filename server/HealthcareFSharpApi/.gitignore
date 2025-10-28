@@ -1,0 +1,49 @@
+# Visual Studio / Rider
+.vs/
+.idea/
+*.suo
+*.user
+*.userprefs
+*.log
+
+# Build artifacts
+[Bb]in/
+[Oo]bj/
+artifacts/
+publish/
+
+# Packages
+packages/
+node_modules/ # If using any JavaScript/TypeScript frontend with the API
+
+# F# specific
+*.fsi # Generated interface files can be ignored if not explicitly needed
+*.fsproj.user
+
+# Editor-specific files
+*.bak
+*~
+# If using VS Code
+.vscode/
+
+# Test results
+TestResults/
+
+# Database files
+*.mdf
+*.ldf
+*.sdf
+
+# Sensitive information (example, adjust as needed)
+appsettings.Development.json # Or other environment-specific config files
+*.env
+*.config.user
+
+# Git history files
+.gitkeep # If used to keep empty directories tracked
+
+# Mac specific
+.DS_Store
+
+# Linux specific
+Thumbs.db
