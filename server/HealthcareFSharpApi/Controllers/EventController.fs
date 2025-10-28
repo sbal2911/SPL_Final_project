@@ -109,3 +109,66 @@ type EventController(logger: ILogger<EventController>) =
             let message = "CreateEvent:Error:" + ex.Message
             logger.LogError(ex, message)
             base.StatusCode(500, message)
+
+    
+
+    [<HttpPost("DeleteEvent")>]
+    member _.DeleteEvent([<FromBody>] event: UpdateEvent) : IActionResult =
+        try
+            logger.LogInformation("DeleteEvent event: {@Event}", event)
+            let eventsCollection = database.GetCollection<Event>("events")
+
+            let eventId = ObjectId.Parse(event._id)
+
+            let filter: FilterDefinition<Event> =
+                Builders<Event>.Filter.Eq((fun e -> e._id), eventId)
+
+            let result = eventsCollection.DeleteOne(filter)
+            let result = JsonConvert.SerializeObject(result)
+            OkObjectResult(result)
+        with ex ->
+            let message: string = "DeleteEvent:Error:" + ex.Message
+            logger.LogError(ex, message)
+            base.StatusCode(500, message)
+
+
+    [<HttpPost("UpdateEvent")>]
+    member _.UpdateEvent([<FromBody>] event: UpdateEvent) : IActionResult =
+        try
+            logger.LogInformation("UpdateEvent event: {@Event}", event)
+            let eventsCollection = database.GetCollection<Event>("events")
+
+            let eventId = ObjectId.Parse("68b9fef49e406be69906b419")
+            let eventId = ObjectId.Parse(event._id)
+            let host = ObjectId.Parse(event.host)
+
+            let filter: FilterDefinition<Event> =
+                Builders<Event>.Filter.Eq((fun e -> e._id), eventId)
+
+            let update =
+                Builders<Event>.Update
+                    .Combine(
+                        Builders<Event>.Update.Set((fun e -> e.category), event.category),
+                        Builders<Event>.Update.Set((fun e -> e.detail), event.detail),
+                        Builders<Event>.Update.Set((fun e -> e.endDate), event.endDate),
+                        Builders<Event>.Update.Set((fun e -> e.filename), event.filename),
+                        Builders<Event>.Update.Set((fun e -> e.host), host),
+                        Builders<Event>.Update.Set((fun e -> e.location), event.location),
+                        Builders<Event>.Update.Set((fun e -> e.startDate), event.startDate),
+                        Builders<Event>.Update.Set((fun e -> e.title), event.title)
+                    )
+
+            let result = eventsCollection.UpdateOne(filter, update)
+
+            // let update = Builders<Event>.Update.Set((fun e -> e.detail), "Updated Detail")
+
+            // let result = eventsCollection.UpdateOne(filter, update)
+            let result = JsonConvert.SerializeObject(result)
+            OkObjectResult(result)
+        with ex ->
+            let message: string = "UpdateEvent:Error:" + ex.Message
+            logger.LogError(ex, message)
+            base.StatusCode(500, message)
+
+
+   
