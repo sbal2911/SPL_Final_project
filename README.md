@@ -60,7 +60,7 @@ The **Healthcare Behavioral Group Therapy** application is designed to support *
 | List RSVPs for a User | ✅ Completed | Oct 28, 2025 |
 | Event Models | ✅ Completed | Oct 30, 2025 |
 | Designing User and RSVP Models | 🚧 In Progress | Oct 31, 2025 |
-| UI Development | 🕓 To Be Started | Nov 4–7, 2025 |
+| UI Development | 🕓 Currently in the planning phase and the majority of work is done, will move to the implementation phase soon | Nov 4–7, 2025 |
 
 ---
 
