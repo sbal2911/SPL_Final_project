@@ -58,8 +58,8 @@ The **Healthcare Behavioral Group Therapy** application is designed to support *
 | Cancel Group Therapy Session | ✅ Completed | Oct 24, 2025 |
 | List RSVPs for an Event | ✅ Completed | Oct 27, 2025 |
 | List RSVPs for a User | ✅ Completed | Oct 28, 2025 |
-| Event & RSVP Models | ✅ Completed | Oct 30, 2025 |
-| Designing User Models | 🚧 In Progress | Oct 31, 2025 |
+| Event Models | ✅ Completed | Oct 30, 2025 |
+| Designing User and RSVP Models | 🚧 In Progress | Oct 31, 2025 |
 | UI Development | 🕓 To Be Started | Nov 4–7, 2025 |
 
 ---
@@ -73,7 +73,7 @@ The **Healthcare Behavioral Group Therapy** application is designed to support *
 
 ---
 
-## Team Contributions
+## Team Contributions until October 30th, 2025
 
 **Rucha & Nidhi** – *EventController*  
 - Connected to MongoDB and managed the `events` collection.  
@@ -137,20 +137,20 @@ These challenges improved the team’s debugging, collaboration, and time manage
 ---
 
 ## Compliance & Security
-- All data encrypted in MongoDB collections.  
+- All data is encrypted in MongoDB collections.  
 - Authentication and authorization implemented using secure tokens.  
 - HIPAA compliance review in progress to ensure regulatory alignment.
 
 ---
 
 ## Team Code-Blooded
-| Name | Role | Major Contribution |
-|------|------|--------------------|
-| Rucha | Developer | EventController, MongoDB integration |
-| Nidhi | Developer | EventController, API validation |
-| Sanjyot | Developer | UserController, Auth logic |
-| Chetan | Developer | RSVPController, Logging |
-| Sudeepta | Developer | Event Data Models, Schema mapping |
+| Name | Responsibilities | 
+|------|------|
+| Rucha | Developer and Testing activities | 
+| Nidhi | Developer and Testing activities | 
+| Sanjyot | Developer and Documentation  | 
+| Chetan | Developer and Testing activities | 
+| Sudeepta | Developer and Documentation | 
 
 ---
 
@@ -165,7 +165,8 @@ These challenges improved the team’s debugging, collaboration, and time manage
 ---
 
 ## Screenshots
-*(Include your F# API screenshot here once available)*
+
+<img width="614" height="368" alt="image" src="https://github.com/user-attachments/assets/8d1efce4-af09-4075-9444-fb9f1362cb5c" />
 
 ---
 
