@@ -87,7 +87,7 @@ The **Healthcare Behavioral Group Therapy** application is designed to support *
 - Implemented insertion and logging logic for new user and login operations.  
 - Handled JSON responses and simple authentication flow.
 
-**Chetan** – *RsvpController*  
+**Chetan** – *RsvpController/Rsvp Data Models*  
 - Created endpoints for RSVP management (`GetRsvps`, `CreateRsvp`, `DeleteRsvp`).  
 - Ensured smooth CRUD operations and robust logging.  
 - Validated RSVP creation and deletion processes.
