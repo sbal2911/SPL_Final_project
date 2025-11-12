@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Models/Event.fs" />
+    <Compile Include="Models/User.fs" />
+    <Compile Include="Models/Rsvp.fs" />    
+    <Compile Include="Controllers/RsvpController.fs" />    
+    <Compile Include="Controllers/UserController.fs" />
+    <Compile Include="Controllers/EventController.fs" />
+    <Compile Include="Program.fs" />
   </ItemGroup>
 
   <ItemGroup>

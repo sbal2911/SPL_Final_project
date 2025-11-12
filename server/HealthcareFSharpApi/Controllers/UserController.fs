@@ -11,6 +11,7 @@ open MyFSharpApi
 open MongoDB.Driver
 open MongoDB.Bson
 open Newtonsoft.Json
+open HealthcareFSharpApi.Models
 
 [<ApiController>]
 [<Route("[controller]")>]
