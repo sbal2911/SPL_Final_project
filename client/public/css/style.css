@@ -1,0 +1,34 @@
+  html,
+  body {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+  }
+
+  main {
+      flex: 1 0 auto;
+      /* Make main take up remaining space */
+  }
+
+  footer {
+      flex-shrink: 0;
+      /* Keep footer at bottom */
+  }
+
+  .disabled-link {
+      pointer-events: none;
+      cursor: not-allowed;
+      text-decoration: none;
+      opacity: 0.6;
+  }
+
+  .event-list {
+      text-indent: 50px;
+  }
+
+  .user-form {
+      display: grid;
+      grid-template-columns: 110px 200px;
+      row-gap: 0.5rem;
+  }
