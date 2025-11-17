@@ -1,0 +1,102 @@
+<%- include('../partials/header.ejs')%>
+
+    <main class="container-fluid  justify-content-center align-items-center my-4">
+        <div class=" bg-light rounded shadow" style="min-width: 300px;">
+            <h5>My Group Therapies</h5>
+
+            <% if(events.length){ %>
+
+                <div class="row border-top">
+                    <div class="col col-md-8 event-list">
+                        <h6>Title</h6>
+                    </div>
+                    <div class="col col-md-4">
+                        <h7>Actions</h7>
+                    </div>
+                </div>
+
+
+                <% events.forEach(event=>{ %>
+
+                    <div class="row border-top">
+                        <div class="col col-md-8">
+
+
+                            <a class="event-list" href="/events/<%=event._id%>">
+                                <p>
+                                    <%=event.title%>
+                                </p>
+                            </a>
+
+                        </div>
+                        <div class="col col-md-4">
+                            <form>
+                                <h5>
+                                    <button class="bg-primary" type="submit" formmethod="get"
+                                        formaction="/events/<%=event._id%>/edit"><i
+                                            class="fa-regular fa-pen-to-square"></i></button> |
+                                    <button class="bg-danger" type="submit" formmethod="post"
+                                        formaction="/events/<%=event._id%>?_method=delete"><i
+                                            class="fa-regular fa-trash-can"></i></button>
+                                </h5>
+                            </form>
+
+                        </div>
+                    </div>
+
+                    <% }); %>
+
+
+                        <%} else{ %>
+                            <p>There is no event to display</p>
+                            <% } %>
+        </div>
+        <div class=" bg-light rounded shadow" style="min-width: 300px;">
+            <hr>
+        </div>
+        <div class=" bg-light rounded shadow" style="min-width: 300px;">
+            <h5>My RSVPs</h5>
+
+            <% if(rsvps.length){ %>
+
+                <div class="row border-top">
+                    <div class="col col-md-8 event-list">
+                        <h6>Title</h6>
+                    </div>
+                    <div class="col col-md-4">
+                        <h7>Going ?</h7>
+                    </div>
+                </div>
+
+
+                <% rsvps.forEach(rsvp=>{ %>
+
+                    <div class="row border-top">
+                        <div class="col col-md-8">
+
+
+                            <a class="event-list" href="/events/<%=rsvp.event._id%>">
+                                <p>
+                                    <%=rsvp.event.title%>
+                                </p>
+                            </a>
+
+                        </div>
+                        <div class="col col-md-4">
+                            <p>
+                                <%=rsvp.status.toUpperCase()%>
+                            </p>
+                        </div>
+                    </div>
+
+                    <% }); %>
+
+
+                        <%} else{ %>
+                            <p>There is no event to display</p>
+                            <% } %>
+        </div>
+
+    </main>
+
+    <%- include('../partials/footer.ejs')%>
