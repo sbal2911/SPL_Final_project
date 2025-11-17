@@ -1,0 +1,74 @@
+<%- include('../partials/header.ejs')%>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <main class="container-fluid   justify-content-center align-items-center my-4">
+        <div class="p-5 bg-light rounded shadow" style="min-width: 300px; ">
+            <form>
+                <h5>
+                    <%=event.title%> |
+                        <% if (user && user._id.toString()===event.host._id.toString()) { %>
+
+                            <button class="bg-primary" type="submit" formmethod="get"
+                                formaction="/events/<%=event._id%>/edit"><i
+                                    class="fa-regular fa-pen-to-square"></i></button> |
+                            <button class="bg-danger" type="submit" formmethod="post"
+                                formaction="/events/<%=event._id%>?_method=delete"><i
+                                    class="fa-regular fa-trash-can"></i></button>
+
+                            <% } %>
+                </h5>
+
+                <% if (user && user && user._id.toString() != event.host._id.toString() ) { %>
+
+                    Going ?
+                    <button class="bg-success text-white" type="submit" formmethod="post"
+                        formaction="/events/<%=event._id%>/rsvp?status=yes">Yes</button>
+                    <button class="bg-danger text-white" type="submit" formmethod="post"
+                        formaction="/events/<%=event._id%>/rsvp?status=no">No</button>
+                    <button class="bg-primary text-white" type="submit" formmethod="post"
+                        formaction="/events/<%=event._id%>/rsvp?status=maybe">Maybe</button>
+
+                    <% } %>
+
+            </form>
+
+            <div class="row align-items-center justify-content-center">
+                <!-- Image Column -->
+                <div class="col-md-3 text-center">
+                    <img src="<%= event.filename%>" alt="Wheel Strategy" class="img-fluid rounded shadow" width="200">
+                </div>
+
+                <!-- Content Column -->
+                <div class="col-md-9">
+                    <div class="mb-3">
+                        <label class="form-label">Host:</label>
+                        <%=event.host.firstname + ' ' + event.host.lastname%>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Start Date:</label>
+                        <%=event.startDate%>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">End Date:</label>
+                        <%=event.endDate%>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Location:</label>
+                        <%=event.location%>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Details:</label>
+                        <br>
+                        <%=event.detail%>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Number of rsvps:</label>
+                        <%=rsvps.length%>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <%- include('../partials/footer.ejs')%>

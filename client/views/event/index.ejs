@@ -1,0 +1,26 @@
+<%- include('../partials/header.ejs')%>
+
+    <main class="container-fluid d-flex  justify-content-center align-items-center my-4">
+        <div class="p-5 bg-light rounded shadow" style="min-width: 300px;">
+       <% if(events.length){ %>
+
+           <% categories.forEach(category=>{  %>
+
+                <h5><%=category%></h5>
+                <% events.forEach(event=>{  %>
+                    <% if (event.category === category) { %>
+                        <a class="event-list" href="/events/<%=event._id%>" ><p><%=event.title%></p></a>
+                    <%}%>
+                <% }); %>
+                
+            <% }); %>
+
+        <%}
+        else{ %>
+            <p>There is no event to display</p>
+        <% } %>
+
+         </div>
+    </main>
+
+    <%- include('../partials/footer.ejs')%>
