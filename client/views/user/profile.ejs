@@ -69,15 +69,15 @@
                 </div>
 
 
-                <% rsvps.forEach(rsvp=>{ %>
+                <% rsvpEvents.forEach(rsvp=>{ %>
 
                     <div class="row border-top">
                         <div class="col col-md-8">
 
 
-                            <a class="event-list" href="/events/<%=rsvp.event._id%>">
+                            <a class="event-list" href="/events/<%=rsvp._id%>">
                                 <p>
-                                    <%=rsvp.event.title%>
+                                    <%=rsvp.title%>
                                 </p>
                             </a>
 

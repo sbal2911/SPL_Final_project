@@ -33,8 +33,8 @@ type RsvpController (logger : ILogger<RsvpController>) =
     
     [<HttpPost("GetRsvps")>]
     member _.GetRsvps() =
-        let rsvpsCollection = database.GetCollection<Rsvp>("rsvps")
-        let all = rsvpsCollection.Find(Builders<Rsvp>.Filter.Empty).ToList()
+        let rsvpsCollection = database.GetCollection<GetRsvp>("rsvps")
+        let all = rsvpsCollection.Find(Builders<GetRsvp>.Filter.Empty).ToList()
         logger.LogInformation("Found rsvps: {@all}", all)
         let all = JsonConvert.SerializeObject(all)
         OkObjectResult(all)

@@ -65,51 +65,15 @@ type EventController(logger: ILogger<EventController>) =
     member _.CreateEvent([<FromBody>] event: NewEvent) : IActionResult =
         try
             logger.LogInformation("CreateEvent event: {@Event}", event)
-
-            // Add to list
             events <- event :: events
-
-            // Use array to simulate validation flags
-            let validations = [| true; false; true; true |]
-            logger.LogInformation("CreateEvent validations: {@validations}", validations)
-
-            // Use for loop to count valid flags
-            let mutable validCount = 0
-            for isValid in validations do
-                logger.LogInformation("CreateEvent isValid: {@isValid}", isValid)
-                if isValid then validCount <- validCount + 1
-
-            // Use lambda to filter events with non-empty category
-            let categories = events |> List.filter (fun e -> not (String.IsNullOrWhiteSpace(e.category)))
-
-            // Use if-else to determine status
-            let statusMessage =
-                if categories.Length > 0 then
-                    "Event accepted"
-                    
-                else
-                    "Event rejected: missing category"
-
-            // Create a struct summary
-            let summary = EventSummary(event.category, categories.Length > 0)
-
-            // Combine result
-            let result =
-                {| 
-                    Status = statusMessage
-                    ValidFlags = validCount
-                    Summary = summary
-                    NamedEventCount = categories.Length
-                |}
-
-            let json = JsonConvert.SerializeObject(result)
-            OkObjectResult(json) :> IActionResult
-
+            let eventsCollection = database.GetCollection<NewEvent>("events")
+            let result = eventsCollection.InsertOne(event)
+            let result = JsonConvert.SerializeObject(result)
+            OkObjectResult(result)
         with ex ->
-            let message = "CreateEvent:Error:" + ex.Message
+            let message: string = "CreateEvent:Error:" + ex.Message
             logger.LogError(ex, message)
             base.StatusCode(500, message)
-
     
 
     [<HttpPost("DeleteEvent")>]

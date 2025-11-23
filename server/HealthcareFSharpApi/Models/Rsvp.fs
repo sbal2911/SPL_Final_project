@@ -23,3 +23,16 @@ type Rsvp = {
     [<BsonElement("__v")>]
     Version: int
 }
+
+type GetRsvp = {
+    status: string
+    [<BsonRepresentation(BsonType.ObjectId)>]
+    event: string
+    [<BsonRepresentation(BsonType.ObjectId)>]
+    user:string
+    [<BsonId>]
+    [<BsonRepresentation(BsonType.ObjectId)>]
+    _id: ObjectId
+    [<BsonElement("__v")>]
+    Version: int
+}
