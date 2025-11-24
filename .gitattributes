@@ -1,0 +1,10 @@
+# Hide JavaScript and CSS from GitHub language statistics
+# Mark all .js and .css files as vendored so Linguist ignores them
+**/*.js linguist-vendored=true
+**/*.css linguist-vendored=true
+*.js linguist-vendored=true
+*.css linguist-vendored=true
+
+# (Optional) Ensure EJS and F# files are detected as those languages
+*.ejs linguist-language=EJS
+*.fs linguist-language=F#
