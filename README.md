@@ -46,7 +46,7 @@ The **Healthcare Behavioral Group Therapy** application is designed to support *
 | Login / Authenticate User | ✅ Completed | Oct 7, 2025 |
 | Get Current User Profile | ✅ Completed | Oct 8, 2025 |
 | Reset Password | ✅ Completed | Oct 9, 2025 |
-| List All Users | ✅ Completed | Oct 10, 2025 |
+| List All Users | ✅ Completed | Oct 10, 2025 | 
 | Create Event / Group Therapy Session | ✅ Completed | Oct 13, 2025 |
 | Create RSVP | ✅ Completed | Oct 13, 2025 |
 | List All Events / Group Sessions | ✅ Completed | Oct 14, 2025 |
@@ -59,8 +59,18 @@ The **Healthcare Behavioral Group Therapy** application is designed to support *
 | List RSVPs for an Event | ✅ Completed | Oct 27, 2025 |
 | List RSVPs for a User | ✅ Completed | Oct 28, 2025 |
 | Event and RSVPs Models | ✅ Completed | Oct 30, 2025 |
-| Designing User Models | 🚧 In Progress | Oct 31, 2025 |
-| UI Development | 🕓 Currently in the planning phase and the majority of work is done, will move to the implementation phase soon | Nov 4–7, 2025 |
+| Designing User Models |✅ Completed | Oct 31, 2025 |
+| UI – Main Page / Default Index Page	|✅ Completed | Nov 4, 2025
+| UI – List Group Therapies Page	|✅ Completed | Nov 5, 2025
+| UI – Register New User Page	|✅ Completed | Nov 6, 2025
+| UI – Login Page	|✅ Completed | Nov 7, 2025
+| UI – Reset Password Page	|✅ Completed | Nov 10, 2025
+| UI – Create Group Therapy Page	|✅ Completed | Nov 11, 2025
+| UI – Update Group Therapy Page	|✅ Completed | Nov 12, 2025
+| UI – Delete Group Therapy Page	|✅ Completed | Nov 13, 2025
+| UI – RSVP Group Therapy Page	|✅ Completed | Nov 14, 2025
+| UI – User Profile Page	|✅ Completed | Nov 14, 2025
+
 
 ---
 
@@ -97,6 +107,32 @@ The **Healthcare Behavioral Group Therapy** application is designed to support *
 - Integrated BSON attributes to align F# types with MongoDB schema.  
 - Simplified host handling for event retrievals and updates.  
 
+## Team contribution Post Midterm till Nov 15,2025
+**Chetan** — *Controllers & Middleware*
+-Developed all controller logic for `Events`, `users`, and `RSVP`s.
+-Built authentication, validation, and session middleware.
+-Integrated controllers with backend F# API.
+
+**Rucha** — *Models & Public Assets*
+-Implemented Express.js models.
+-Completed the full public/ folder including CSS, JS, and static assets.
+-Ensured UI consistency with backend models.
+
+**Nidhi** — *Routes & View Partials*
+-Completed all routes inside routes/.
+-Created EJS view partials and user-related templates.
+-Successfully linked routing logic with controllers.
+
+**Sudeepta** — *Full Views & app.js*
+-Completed all remaining EJS views.
+-Developed the core app.js including middleware setup and routing.
+-Integrated all frontend components into a functional web app.
+
+**Sanjyot** — *Package Configuration*
+-Finalized package.json and package-lock.json.
+-Ensured all dependencies install and build correctly.
+-Verified full compatibility of Express.js modules.
+
 ---
 
 ## Challenges Faced
@@ -115,6 +151,8 @@ These challenges improved the team’s debugging, collaboration, and time manage
 - Conduct **User Acceptance Testing (UAT)** with a sample dataset.  
 - Finalize HIPAA compliance review and perform security audits.  
 - Prepare documentation and deployment scripts before **Nov 15, 2025**.
+  
+*Post Midterm Completed All task before 15th Nov*
 
 ---
 
