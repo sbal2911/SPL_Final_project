@@ -1,13 +1,14 @@
-# Ignore all JavaScript and EJS files for language stats
-*.js linguist-vendored
-*.ejs linguist-vendored
-*.css linguist-vendored
+# Ignore node_modules or other true vendor files
+node_modules/** linguist-vendored
 
-# (Optional) If there are other JS-like files, add them too
-*.jsx linguist-vendored
-*.mjs linguist-vendored
+# Let ExpressJS files count as JavaScript
+*.js linguist-language=JavaScript
+*.jsx linguist-language=JavaScript
+*.mjs linguist-language=JavaScript
 
-# Ensure F# and CSS are recognized (you don’t necessarily need this if they’re detected correctly)
+# Optional: ensure EJS is recognized as EJS
+*.ejs linguist-language=EJS
+
+# F# files
 *.fs linguist-language=F#
 *.fsx linguist-language=F#
-*.ejs linguist-language=EJS
