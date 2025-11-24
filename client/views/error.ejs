@@ -1,5 +1,18 @@
 <%- include('./partials/header.ejs')%>
-        <h3><%= error.status%> Error</h3> 
-        <p><%= error.message%> </p>
+
+<main class="container-fluid">
+    <div class="container">
+        <div class="card-modern text-center">
+            <div class="empty-state">
+                <i class="fas fa-exclamation-triangle fa-5x text-danger mb-4"></i>
+                <h2 class="text-danger mb-3"><%= error.status%> Error</h2>
+                <p class="lead mb-4"><%= error.message%></p>
+                <a href="/" class="btn btn-modern btn-primary">
+                    <i class="fas fa-home me-2"></i>Return to Homepage
+                </a>
+            </div>
+        </div>
     </div>
-    <%- include('./partials/footer.ejs')%>
+</main>
+
+<%- include('./partials/footer.ejs')%>

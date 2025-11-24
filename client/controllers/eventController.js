@@ -310,23 +310,23 @@ exports.show = async (req, res, next) => {
     foundEvent = events.find(r => r._id === id);
     console.log('show.foundEvent', foundEvent);
 
+    if (!foundEvent) {
+        let err = new Error('Can not find the event with id:' + id);
+        err.status = 404;
+        return next(err);
+    }
+
     users = await getUsers();
     console.log('show:users:', users);
     foundUser = users.find(r => r._id === foundEvent.host);
     console.log('show.foundUser', foundUser);
     foundEvent.host = foundUser;
 
-    rsvps = await getRsvps();
+    // Get RSVPs for this specific event from MongoDB
+    let rsvps = await rsvpModel.find({ event: id }).populate('user', 'firstname lastname');
     console.log('show:rsvps:', rsvps);
-    foundRsvps = rsvps.find(r => r._id === foundEvent._id);
-    console.log('show.foundRsvps', foundRsvps);
 
     let event = foundEvent;
-    rsvps = [];
-    if (foundRsvps) {
-        rsvps = foundRsvps;
-    }
-
     res.render('./event/show', { event, rsvps });
     // model.findById(id).populate('host')
     // Promise.all([model.findById(id).populate('host'), rsvpModel.find({ event: id, status: 'yes' })])
@@ -346,46 +346,56 @@ exports.show = async (req, res, next) => {
     //     .catch(err => next(err));
 };
 
-exports.edit = (req, res, next) => {
+exports.edit = async (req, res, next) => {
     let id = req.params.id;
     if (!ObjectId.isValid(id)) {
         console.error("Invalid ID format:", id);
         let err = new Error('Invalid Event ID');
         err.status = 400;
-        next(err);
+        return next(err);
     }
 
-    model.findById(id)
-        .then(editEvent => {
+    try {
+        // Fetch events from F# API
+        events = await getEvents();
+        console.log('edit:events:', events);
+        
+        // Find the event by ID
+        let editEvent = events.find(r => r._id === id);
+        
+        if (!editEvent) {
+            let err = new Error('Can not find the event with id:' + id);
+            err.status = 404;
+            return next(err);
+        }
 
-            if (editEvent) {
-                console.log('edit:editEvent', editEvent);
-                let startDateISOString = editEvent.startDate.toISOString();
-                let endDateISOString = editEvent.endDate.toISOString();
+        console.log('edit:editEvent', editEvent);
+        
+        // Format dates for datetime-local input (YYYY-MM-DDTHH:mm)
+        let startDate = new Date(editEvent.startDate);
+        let endDate = new Date(editEvent.endDate);
+        
+        // Convert to ISO string and extract date-time part (YYYY-MM-DDTHH:mm)
+        let startDateISOString = startDate.toISOString();
+        let endDateISOString = endDate.toISOString();
 
-                let event = {
-                    _id: editEvent._id,
-                    category: editEvent.category,
-                    title: editEvent.title,
-                    host: editEvent.host,
-                    detail: editEvent.detail,
-                    location: editEvent.location,
-                    startDate: startDateISOString.substring(0, 16),
-                    endDate: endDateISOString.substring(0, 16),
-                    filename: editEvent.filename
-                };
+        let event = {
+            _id: editEvent._id,
+            category: editEvent.category,
+            title: editEvent.title,
+            host: editEvent.host,
+            detail: editEvent.detail,
+            location: editEvent.location,
+            startDate: startDateISOString.substring(0, 16),
+            endDate: endDateISOString.substring(0, 16),
+            filename: editEvent.filename
+        };
 
-                console.log('edit:event', event);
-                res.render('./event/edit', { event });
-            }
-            else {
-                let err = new Error('Can not find the event with id:' + id);
-                err.status = 404;
-                next(err);
-            }
-
-        })
-        .catch(err => next(err))
+        console.log('edit:event', event);
+        res.render('./event/edit', { event });
+    } catch (err) {
+        next(err);
+    }
 };
 
 exports.update = (req, res, next) => {
@@ -434,42 +444,32 @@ exports.update = (req, res, next) => {
     //     });
 };
 
-exports.delete = (req, res, next) => {
+exports.delete = async (req, res, next) => {
     let id = req.params.id;
     if (!ObjectId.isValid(id)) {
         console.error("Invalid ID format:", id);
         let err = new Error('Invalid Event ID');
         err.status = 400;
-        next(err);
-
+        return next(err);
     }
 
     console.log('delete:id:', id);
 
+    // First, delete all RSVPs associated with this event from MongoDB
+    try {
+        const deleteResult = await rsvpModel.deleteMany({ event: id });
+        console.log('delete:rsvps deleted:', deleteResult.deletedCount);
+    } catch (rsvpError) {
+        console.error('delete:rsvp deletion error:', rsvpError);
+        // Continue with event deletion even if RSVP deletion fails
+    }
+
+    // Then delete the event via F# API
     let event = {
         _id: id
-    }
-    deleteEvent(res, event)
-    // model.findByIdAndDelete(id)
-    //     .then(event => {
-    //         console.log('delete:event', event);
-
-    //         rsvpModel.deleteMany({ event: event._id })
-    //             .then(result => {
-    //                 console.log('rsvp:delete:result', result);
-    //             })
-    //             .catch(err => next(err))
-
-    //         if (event) {
-    //             res.redirect('/events');
-    //         }
-    //         else {
-    //             let err = new Error('Can not find the event with id:' + id);
-    //             err.status = 404;
-    //             next(err);
-    //         }
-    //     })
-    //     .catch(err => next(err));
+    };
+    
+    deleteEvent(res, event);
 };
 
 exports.rsvp = (req, res, next) => {

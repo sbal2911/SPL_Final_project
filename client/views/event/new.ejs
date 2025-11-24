@@ -1,73 +1,87 @@
 <%- include('../partials/header.ejs')%>
-    <div class="content">
 
-        <main class="container-fluid justify-content-center align-items-center my-4">
-            <div class="p-5 bg-light rounded shadow">
-                <form action='/events/create' enctype="multipart/form-data" method='POST'>
-
-                    <div class="row mb-3 align-items-center">
-                        <label for="category" class="col-sm-2 col-form-label">Category</label>
-                        <div class="col-12 col-md-6">
-                            <select id="category" name="category" class="form-select" required>
-                                <option selected disabled>Select a category</option>
-                                <option value="anxiety" selected="selected">Anxiety</option>
-                                <option value="depression">Depression</option>
-                                <option value="trauma">Trauma</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="row mb-3 align-items-center">
-                        <label for="title" class="col-sm-2 col-form-label">Title</label>
-                        <div class="col-12 col-md-6">
-                            <input type="text" class="form-control" id="title" name="title" placeholder="Enter Title" required>
-                        </div>
-                    </div>
-
-                    <div class="row mb-3 align-items-center">
-                        <label for="detail" class="col-sm-2 col-form-label">Detail</label>
-                        <div class="col-12 col-md-6">
-                            <textarea class="form-control" id="detail" name="detail" rows="3" placeholder="Brief event detail"
-                                required></textarea>
-                        </div>
-                    </div>
-
-                    <div class="row mb-3 align-items-center">
-                        <label for="location" class="col-sm-2 col-form-label">Location</label>
-                        <div class="col-12 col-md-6">
-                            <input type="text" class="form-control" id="location" name="location" placeholder="Location" required>
-                        </div>
-                    </div>
-
-                    <div class="row mb-3 align-items-center">
-                        <label for="startDate" class="col-sm-2 col-form-label">Start Date</label>
-                        <div class="col-12 col-md-6">
-                            <input type="datetime-local" class="form-control" id="startDate" name="startDate" required>
-                        </div>
-                    </div>
-
-                    <div class="row mb-3 align-items-center">
-                        <label for="endDate" class="col-sm-2 col-form-label">End Date</label>
-                        <div class="col-12 col-md-6">
-                            <input type="datetime-local" class="form-control" id="endDate" name="endDate" required>
-                        </div>
-                    </div>
-
-                    <div class="row mb-3 align-items-center">
-                        <label for="image" class="col-sm-2 col-form-label">Event Image</label>
-                        <div class="col-12 col-md-6">
-                            <input class="form-control" type="file" id="image" name="image" accept="image/*" required>
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="offset-sm-2 col-12 col-md-6">
-                            <button type="submit" class="btn btn-primary w-100" value="submit">Submit</button>
-                        </div>
-                    </div>
-                </form>
+<main class="container-fluid">
+    <div class="container">
+        <div class="form-modern">
+            <div class="text-center mb-4">
+                <i class="fas fa-plus-circle fa-3x text-primary mb-3"></i>
+                <h2>Create New Group Therapy</h2>
+                <p class="text-muted">Share your therapy group with the community</p>
             </div>
-        </main>
 
+            <form action='/events/create' enctype="multipart/form-data" method='POST'>
+                <div class="mb-3">
+                    <label for="category" class="form-label">
+                        <i class="fas fa-tag me-2"></i>Category
+                    </label>
+                    <select id="category" name="category" class="form-select" required>
+                        <option selected disabled>Select a category</option>
+                        <option value="anxiety">Anxiety</option>
+                        <option value="depression">Depression</option>
+                        <option value="trauma">Trauma</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="title" class="form-label">
+                        <i class="fas fa-heading me-2"></i>Title
+                    </label>
+                    <input type="text" class="form-control" id="title" name="title" 
+                           placeholder="Enter group therapy title" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="detail" class="form-label">
+                        <i class="fas fa-align-left me-2"></i>Details
+                    </label>
+                    <textarea class="form-control" id="detail" name="detail" rows="5" 
+                              placeholder="Describe the group therapy session, goals, and what participants can expect"
+                              required></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="location" class="form-label">
+                        <i class="fas fa-map-marker-alt me-2"></i>Location
+                    </label>
+                    <input type="text" class="form-control" id="location" name="location" 
+                           placeholder="Enter location (e.g., Room 101, Building A or Online)" required>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="startDate" class="form-label">
+                            <i class="fas fa-calendar-alt me-2"></i>Start Date & Time
+                        </label>
+                        <input type="datetime-local" class="form-control" id="startDate" name="startDate" required>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="endDate" class="form-label">
+                            <i class="fas fa-calendar-times me-2"></i>End Date & Time
+                        </label>
+                        <input type="datetime-local" class="form-control" id="endDate" name="endDate" required>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="image" class="form-label">
+                        <i class="fas fa-image me-2"></i>Event Image
+                    </label>
+                    <input class="form-control" type="file" id="image" name="image" accept="image/*" required>
+                    <small class="text-muted">Upload an image that represents your group therapy session</small>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-modern btn-primary">
+                        <i class="fas fa-check me-2"></i>Create Group Therapy
+                    </button>
+                    <a href="/events" class="btn btn-outline-secondary">
+                        <i class="fas fa-times me-2"></i>Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
-    <%- include('../partials/footer.ejs')%>
+</main>
+
+<%- include('../partials/footer.ejs')%>

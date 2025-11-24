@@ -189,16 +189,9 @@ exports.profile = async (req, res, next) => {
     console.log('profile.foundUser', foundUser);
     user = foundUser;
 
-    rsvps = await getRsvps();
+    // Get RSVPs for this user from MongoDB and populate event data
+    let rsvps = await rsvpModel.find({ user: id }).populate('event');
     console.log('profile.rsvps:', rsvps);
-    foundRsvps = rsvps.filter(r => r._id === id);
-    console.log('profile.foundRsvps', foundRsvps);
-    if (foundRsvps) {
-      rsvps = foundRsvps;  
-    }else{
-        rsvps =[];
-    }
-    
 
     res.render('./user/profile', { user, events, categories, rsvps })
 
