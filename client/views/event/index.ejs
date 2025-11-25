@@ -1,26 +1,64 @@
 <%- include('../partials/header.ejs')%>
 
-    <main class="container-fluid d-flex  justify-content-center align-items-center my-4">
-        <div class="p-5 bg-light rounded shadow" style="min-width: 300px;">
-       <% if(events.length){ %>
+<main class="container-fluid">
+    <div class="container">
+        <div class="hero-section text-center mb-4">
+            <h1>
+                <i class="fas fa-calendar-alt me-3"></i>Group Therapies
+            </h1>
+            <p class="lead">Find the right therapy group for your needs</p>
+        </div>
 
-           <% categories.forEach(category=>{  %>
-
-                <h5><%=category%></h5>
-                <% events.forEach(event=>{  %>
-                    <% if (event.category === category) { %>
-                        <a class="event-list" href="/events/<%=event._id%>" ><p><%=event.title%></p></a>
-                    <%}%>
-                <% }); %>
-                
+        <% if(events.length){ %>
+            <% categories.forEach(category=>{  %>
+                <div class="event-list-section">
+                    <h3>
+                        <i class="fas fa-tag me-2"></i>
+                        <%=category.charAt(0).toUpperCase() + category.slice(1)%>
+                    </h3>
+                    <div class="row">
+                        <% events.forEach(event=>{  %>
+                            <% if (event.category === category) { %>
+                                <div class="col-md-6 col-lg-4 mb-4">
+                                    <div class="card-event">
+                                        <div class="category-badge category-<%=category%>">
+                                            <%=category%>
+                                        </div>
+                                        <h5>
+                                            <a href="/events/<%=event._id%>">
+                                                <%=event.title%>
+                                            </a>
+                                        </h5>
+                                        <p class="text-muted mb-2">
+                                            <i class="fas fa-map-marker-alt me-1"></i><%=event.location%>
+                                        </p>
+                                        <p class="text-muted mb-3">
+                                            <i class="fas fa-calendar me-1"></i><%=new Date(event.startDate).toLocaleDateString()%>
+                                        </p>
+                                        <a href="/events/<%=event._id%>" class="btn btn-modern btn-primary btn-sm">
+                                            View Details <i class="fas fa-arrow-right ms-1"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            <%}%>
+                        <% }); %>
+                    </div>
+                </div>
             <% }); %>
-
-        <%}
-        else{ %>
-            <p>There is no event to display</p>
+        <%} else{ %>
+            <div class="card-modern">
+                <div class="empty-state">
+                    <i class="fas fa-calendar-times"></i>
+                    <p>There are no group therapies available at this time.</p>
+                    <% if(user) { %>
+                        <a href="/events/new" class="btn btn-modern btn-primary mt-3">
+                            <i class="fas fa-plus me-2"></i>Create First Group Therapy
+                        </a>
+                    <% } %>
+                </div>
+            </div>
         <% } %>
+    </div>
+</main>
 
-         </div>
-    </main>
-
-    <%- include('../partials/footer.ejs')%>
+<%- include('../partials/footer.ejs')%>

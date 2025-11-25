@@ -1,102 +1,152 @@
 <%- include('../partials/header.ejs')%>
 
-    <main class="container-fluid  justify-content-center align-items-center my-4">
-        <div class=" bg-light rounded shadow" style="min-width: 300px;">
-            <h5>My Group Therapies</h5>
+<main class="container-fluid">
+    <div class="container">
+        <!-- Profile Header -->
+        <div class="hero-section text-center mb-4">
+            <h1>
+                <i class="fas fa-user-circle me-3"></i><%=user.firstname%>'s Profile
+            </h1>
+            <p class="lead">Manage your group therapies and RSVPs</p>
+        </div>
+
+        <!-- My Group Therapies Section -->
+        <div class="profile-section">
+            <h5>
+                <i class="fas fa-calendar-plus me-2"></i>My Group Therapies
+            </h5>
 
             <% if(events.length){ %>
-
-                <div class="row border-top">
-                    <div class="col col-md-8 event-list">
-                        <h6>Title</h6>
-                    </div>
-                    <div class="col col-md-4">
-                        <h7>Actions</h7>
-                    </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="profile-table-header">
+                            <tr>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Date</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% events.forEach(event=>{ %>
+                                <tr class="profile-table-row">
+                                    <td>
+                                        <a href="/events/<%=event._id%>" class="text-decoration-none">
+                                            <strong><%=event.title%></strong>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <span class="category-badge category-<%=event.category%>" style="font-size: 0.75rem;">
+                                            <%=event.category%>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <small class="text-muted">
+                                            <%=new Date(event.startDate).toLocaleDateString()%>
+                                        </small>
+                                    </td>
+                                    <td class="text-end">
+                                        <div class="action-buttons">
+                                            <form style="display: inline;">
+                                                <button class="bg-primary" type="submit" formmethod="get"
+                                                    formaction="/events/<%=event._id%>/edit" title="Edit">
+                                                    <i class="fa-regular fa-pen-to-square"></i>
+                                                </button>
+                                            </form>
+                                            <form style="display: inline;">
+                                                <button class="bg-danger" type="submit" formmethod="post"
+                                                    formaction="/events/<%=event._id%>?_method=delete" title="Delete"
+                                                    onclick="return confirm('Are you sure?');">
+                                                    <i class="fa-regular fa-trash-can"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
                 </div>
-
-
-                <% events.forEach(event=>{ %>
-
-                    <div class="row border-top">
-                        <div class="col col-md-8">
-
-
-                            <a class="event-list" href="/events/<%=event._id%>">
-                                <p>
-                                    <%=event.title%>
-                                </p>
-                            </a>
-
-                        </div>
-                        <div class="col col-md-4">
-                            <form>
-                                <h5>
-                                    <button class="bg-primary" type="submit" formmethod="get"
-                                        formaction="/events/<%=event._id%>/edit"><i
-                                            class="fa-regular fa-pen-to-square"></i></button> |
-                                    <button class="bg-danger" type="submit" formmethod="post"
-                                        formaction="/events/<%=event._id%>?_method=delete"><i
-                                            class="fa-regular fa-trash-can"></i></button>
-                                </h5>
-                            </form>
-
-                        </div>
-                    </div>
-
-                    <% }); %>
-
-
-                        <%} else{ %>
-                            <p>There is no event to display</p>
-                            <% } %>
+            <%} else{ %>
+                <div class="empty-state">
+                    <i class="fas fa-calendar-times"></i>
+                    <p>You haven't created any group therapies yet.</p>
+                    <a href="/events/new" class="btn btn-modern btn-primary mt-3">
+                        <i class="fas fa-plus me-2"></i>Create Your First Group Therapy
+                    </a>
+                </div>
+            <% } %>
         </div>
-        <div class=" bg-light rounded shadow" style="min-width: 300px;">
-            <hr>
-        </div>
-        <div class=" bg-light rounded shadow" style="min-width: 300px;">
-            <h5>My RSVPs</h5>
+
+        <!-- My RSVPs Section -->
+        <div class="profile-section">
+            <h5>
+                <i class="fas fa-calendar-check me-2"></i>My RSVPs
+            </h5>
 
             <% if(rsvps.length){ %>
-
-                <div class="row border-top">
-                    <div class="col col-md-8 event-list">
-                        <h6>Title</h6>
-                    </div>
-                    <div class="col col-md-4">
-                        <h7>Going ?</h7>
-                    </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="profile-table-header">
+                            <tr>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Date</th>
+                                <th class="text-center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% rsvps.forEach(rsvp=>{ 
+                                if (!rsvp.event) return; // Skip if event is not populated
+                                let event = rsvp.event;
+                            %>
+                                <tr class="profile-table-row">
+                                    <td>
+                                        <a href="/events/<%=event._id%>" class="text-decoration-none">
+                                            <strong><%=event.title%></strong>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <span class="category-badge category-<%=event.category%>" style="font-size: 0.75rem;">
+                                            <%=event.category%>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <small class="text-muted">
+                                            <%=new Date(event.startDate).toLocaleDateString()%>
+                                        </small>
+                                    </td>
+                                    <td class="text-center">
+                                        <% if(rsvp.status === 'yes') { %>
+                                            <span class="badge bg-success" style="padding: 0.5rem 1rem;">
+                                                <i class="fas fa-check me-1"></i>Going
+                                            </span>
+                                        <% } else if(rsvp.status === 'no') { %>
+                                            <span class="badge bg-danger" style="padding: 0.5rem 1rem;">
+                                                <i class="fas fa-times me-1"></i>Not Going
+                                            </span>
+                                        <% } else { %>
+                                            <span class="badge bg-primary" style="padding: 0.5rem 1rem;">
+                                                <i class="fas fa-question me-1"></i>Maybe
+                                            </span>
+                                        <% } %>
+                                    </td>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
                 </div>
-
-
-                <% rsvpEvents.forEach(rsvp=>{ %>
-
-                    <div class="row border-top">
-                        <div class="col col-md-8">
-
-
-                            <a class="event-list" href="/events/<%=rsvp._id%>">
-                                <p>
-                                    <%=rsvp.title%>
-                                </p>
-                            </a>
-
-                        </div>
-                        <div class="col col-md-4">
-                            <p>
-                                <%=rsvp.status.toUpperCase()%>
-                            </p>
-                        </div>
-                    </div>
-
-                    <% }); %>
-
-
-                        <%} else{ %>
-                            <p>There is no event to display</p>
-                            <% } %>
+            <%} else{ %>
+                <div class="empty-state">
+                    <i class="fas fa-calendar-times"></i>
+                    <p>You haven't RSVP'd to any group therapies yet.</p>
+                    <a href="/events" class="btn btn-modern btn-primary mt-3">
+                        <i class="fas fa-search me-2"></i>Browse Group Therapies
+                    </a>
+                </div>
+            <% } %>
         </div>
+    </div>
+</main>
 
-    </main>
-
-    <%- include('../partials/footer.ejs')%>
+<%- include('../partials/footer.ejs')%>

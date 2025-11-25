@@ -181,7 +181,7 @@ exports.profile = async (req, res, next) => {
     console.log('profile.events:', events);
     foundEvents = events.filter(r => r.host === id);
     console.log('profile.foundEvents', foundEvents);
-
+    events = foundEvents;
 
     users = await getUsers();
     console.log('profile.users:', users);
@@ -189,31 +189,20 @@ exports.profile = async (req, res, next) => {
     console.log('profile.foundUser', foundUser);
     user = foundUser;
 
-    rsvps = await getRsvps();
+    // Get RSVPs for this user from MongoDB and populate event data
+    let rsvps = await rsvpModel.find({ user: id }).populate('event');
     console.log('profile.rsvps:', rsvps);
-    allEvents = await getEvents();
-    console.log('profile.rsvps.events', allEvents);
-    userRsvps = rsvps.filter(r => r.user === id);
-    rsvpEvents = []
-    for (let index = 0; index < userRsvps.length; index++) {
-        let rsvp = userRsvps[index];
-        console.log('profile.rsvp:', rsvp)
-        for (let index = 0; index < allEvents.length; index++) {
-            let crntEvent = allEvents[index];
-            console.log(crntEvent._id, rsvp.event)
-            if ((crntEvent._id === rsvp.event) ) {
-                crntEvent.status = rsvp.status;
-                rsvpEvents.push(crntEvent);
-            }
-        }
-    }
 
-    console.log('rsvpEvents',rsvpEvents);
- 
-    events = foundEvents;
-    res.render('./user/profile', { user, events, categories, rsvpEvents })
+    res.render('./user/profile', { user, events, categories, rsvps })
 
-
+    // Promise.all([model.findById(id), Event.find({ host: id }), rsvpModel.find({ user: id }).populate('event')])
+    //     .then(results => {
+    //         const [user, events, rsvps] = results
+    //         console.log('profile:rsvps', rsvps);
+    //         let categories = [...new Set(events.map(event => event.category))].sort();
+    //         res.render('./user/profile', { user, events, categories, rsvps })
+    //     })
+    //     .catch(err => next(err));
 };
 
 

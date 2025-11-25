@@ -1,25 +1,63 @@
 <%- include('../partials/header.ejs')%>
-        <main class="container-fluid justify-content-center align-items-center my-4">
-                <div class="p-5 bg-light rounded shadow">
 
+<main class="container-fluid">
+    <div class="container d-flex justify-content-center align-items-center" style="min-height: 60vh;">
+        <div class="form-modern">
+            <div class="text-center mb-4">
+                <i class="fas fa-user-plus fa-3x text-primary mb-3"></i>
+                <h2>Create Your Account</h2>
+                <p class="text-muted">Join our supportive community</p>
+            </div>
 
-                        <form action='/users' method='POST' class="user-form">
-                                <label for="firstName">First Name</label>
-                                <input type="text" id="firstname" name="firstname" required>
+            <form action='/users' method='POST'>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="firstname" class="form-label">
+                            <i class="fas fa-user me-2"></i>First Name
+                        </label>
+                        <input type="text" class="form-control" id="firstname" name="firstname" 
+                               placeholder="Enter your first name" required>
+                    </div>
 
-                                <label for="lastName">Last Name</label></td>
-                                <input type="text" id="lastname" name="lastname" required></td>
-
-                                <label for="email">Email Address</label>
-                                <input type="email" id="email" name="email">
-
-                                <label for="password">Password</label>
-                                <input type="password" id="password" name="password" minlength="8" maxlength="64" required>
-
-                                <input type="submit" value="Sign Up">
-                        </form>
-
+                    <div class="col-md-6 mb-3">
+                        <label for="lastname" class="form-label">
+                            <i class="fas fa-user me-2"></i>Last Name
+                        </label>
+                        <input type="text" class="form-control" id="lastname" name="lastname" 
+                               placeholder="Enter your last name" required>
+                    </div>
                 </div>
-        </main>
-        
-        <%- include('../partials/footer.ejs')%>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">
+                        <i class="fas fa-envelope me-2"></i>Email Address
+                    </label>
+                    <input type="email" class="form-control" id="email" name="email" 
+                           placeholder="Enter your email" required>
+                </div>
+
+                <div class="mb-4">
+                    <label for="password" class="form-label">
+                        <i class="fas fa-lock me-2"></i>Password
+                    </label>
+                    <input type="password" class="form-control" id="password" name="password" 
+                           placeholder="Enter your password (min. 8 characters)" minlength="8" maxlength="64" required>
+                    <small class="text-muted">Password must be at least 8 characters long</small>
+                </div>
+
+                <button type="submit" class="btn btn-modern btn-primary w-100">
+                    <i class="fas fa-user-plus me-2"></i>Sign Up
+                </button>
+
+                <div class="text-center mt-4">
+                    <p class="text-muted">
+                        Already have an account? 
+                        <a href="/users/login" class="text-primary text-decoration-none">Login here</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+<%- include('../partials/footer.ejs')%>

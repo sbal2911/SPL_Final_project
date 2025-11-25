@@ -1,74 +1,170 @@
 <%- include('../partials/header.ejs')%>
 
-    <link rel="stylesheet" href="../css/style.css">
-
-    <main class="container-fluid   justify-content-center align-items-center my-4">
-        <div class="p-5 bg-light rounded shadow" style="min-width: 300px; ">
-            <form>
-                <h5>
-                    <%=event.title%> |
-                        <% if (user && user._id.toString()===event.host._id.toString()) { %>
-
+<main class="container-fluid">
+    <div class="container">
+        <div class="event-detail-card">
+            <!-- Header with Actions -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <span class="category-badge category-<%=event.category%>">
+                        <%=event.category%>
+                    </span>
+                    <h2 class="mt-2 mb-0"><%=event.title%></h2>
+                </div>
+                <% if (user && user._id.toString()===event.host._id.toString()) { %>
+                    <div class="action-buttons">
+                        <form style="display: inline;">
                             <button class="bg-primary" type="submit" formmethod="get"
-                                formaction="/events/<%=event._id%>/edit"><i
-                                    class="fa-regular fa-pen-to-square"></i></button> |
+                                formaction="/events/<%=event._id%>/edit" title="Edit">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                            </button>
+                        </form>
+                        <form style="display: inline;">
                             <button class="bg-danger" type="submit" formmethod="post"
-                                formaction="/events/<%=event._id%>?_method=delete"><i
-                                    class="fa-regular fa-trash-can"></i></button>
+                                formaction="/events/<%=event._id%>?_method=delete" title="Delete"
+                                onclick="return confirm('Are you sure you want to delete this group therapy?');">
+                                <i class="fa-regular fa-trash-can"></i>
+                            </button>
+                        </form>
+                    </div>
+                <% } %>
+            </div>
 
-                            <% } %>
-                </h5>
-
-                <% if (user && user && user._id.toString() != event.host._id.toString() ) { %>
-
-                    Going ?
-                    <button class="bg-success text-white" type="submit" formmethod="post"
-                        formaction="/events/<%=event._id%>/rsvp?status=yes">Yes</button>
-                    <button class="bg-danger text-white" type="submit" formmethod="post"
-                        formaction="/events/<%=event._id%>/rsvp?status=no">No</button>
-                    <button class="bg-primary text-white" type="submit" formmethod="post"
-                        formaction="/events/<%=event._id%>/rsvp?status=maybe">Maybe</button>
-
+            <!-- RSVP Section -->
+            <% if (user && user._id.toString() != event.host._id.toString() ) { 
+                let userRsvp = rsvps.find(r => r.user && r.user._id && r.user._id.toString() === user._id.toString());
+            %>
+                <div class="rsvp-section mb-4 p-3" style="background: #f8f9fa; border-radius: 8px;">
+                    <h5 class="mb-3">
+                        <i class="fas fa-calendar-check me-2"></i>Will you be attending?
+                    </h5>
+                    <% if (userRsvp) { %>
+                        <div class="alert alert-info mb-3" role="alert">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Your current RSVP:</strong> 
+                            <span class="badge <%= userRsvp.status === 'yes' ? 'bg-success' : (userRsvp.status === 'no' ? 'bg-danger' : 'bg-primary') %> ms-2">
+                                <%= userRsvp.status.toUpperCase() %>
+                            </span>
+                        </div>
                     <% } %>
+                    <form>
+                        <div class="rsvp-buttons">
+                            <button class="bg-success text-white <%= userRsvp && userRsvp.status === 'yes' ? 'border border-3 border-dark' : '' %>" 
+                                    type="submit" formmethod="post"
+                                    formaction="/events/<%=event._id%>/rsvp?status=yes">
+                                <i class="fas fa-check me-1"></i>Yes, I'll be there
+                            </button>
+                            <button class="bg-danger text-white <%= userRsvp && userRsvp.status === 'no' ? 'border border-3 border-dark' : '' %>" 
+                                    type="submit" formmethod="post"
+                                    formaction="/events/<%=event._id%>/rsvp?status=no">
+                                <i class="fas fa-times me-1"></i>No, I can't make it
+                            </button>
+                            <button class="bg-primary text-white <%= userRsvp && userRsvp.status === 'maybe' ? 'border border-3 border-dark' : '' %>" 
+                                    type="submit" formmethod="post"
+                                    formaction="/events/<%=event._id%>/rsvp?status=maybe">
+                                <i class="fas fa-question me-1"></i>Maybe
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            <% } %>
 
-            </form>
-
-            <div class="row align-items-center justify-content-center">
+            <div class="row">
                 <!-- Image Column -->
-                <div class="col-md-3 text-center">
-                    <img src="<%= event.filename%>" alt="Wheel Strategy" class="img-fluid rounded shadow" width="200">
+                <div class="col-md-4 mb-4">
+                    <div class="event-image-container">
+                        <img src="<%= event.filename%>" alt="<%=event.title%>" class="img-fluid">
+                    </div>
                 </div>
 
                 <!-- Content Column -->
-                <div class="col-md-9">
-                    <div class="mb-3">
-                        <label class="form-label">Host:</label>
-                        <%=event.host.firstname + ' ' + event.host.lastname%>
+                <div class="col-md-8">
+                    <div class="event-info-item">
+                        <label>
+                            <i class="fas fa-user-md me-2"></i>Host
+                        </label>
+                        <span><%=event.host.firstname + ' ' + event.host.lastname%></span>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Start Date:</label>
-                        <%=event.startDate%>
+
+                    <div class="event-info-item">
+                        <label>
+                            <i class="fas fa-calendar-alt me-2"></i>Start Date
+                        </label>
+                        <span><%=new Date(event.startDate).toLocaleString()%></span>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">End Date:</label>
-                        <%=event.endDate%>
+
+                    <div class="event-info-item">
+                        <label>
+                            <i class="fas fa-calendar-times me-2"></i>End Date
+                        </label>
+                        <span><%=new Date(event.endDate).toLocaleString()%></span>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Location:</label>
-                        <%=event.location%>
+
+                    <div class="event-info-item">
+                        <label>
+                            <i class="fas fa-map-marker-alt me-2"></i>Location
+                        </label>
+                        <span><%=event.location%></span>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Details:</label>
-                        <br>
-                        <%=event.detail%>
+
+                    <div class="event-info-item">
+                        <label>
+                            <i class="fas fa-info-circle me-2"></i>Details
+                        </label>
+                        <p style="white-space: pre-wrap;"><%=event.detail%></p>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Number of rsvps:</label>
-                        <%=rsvps.length%>
+
+                    <div class="event-info-item">
+                        <label>
+                            <i class="fas fa-users me-2"></i>Attendees
+                        </label>
+                        <span>
+                            <strong><%=rsvps.length%></strong> 
+                            <%=rsvps.length === 1 ? 'person' : 'people'%> 
+                            <%=rsvps.length > 0 ? 'registered' : 'registered yet'%>
+                        </span>
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
 
-    <%- include('../partials/footer.ejs')%>
+            <!-- RSVP List for Hosts -->
+            <% if (user && user._id.toString() === event.host._id.toString() && rsvps.length > 0) { %>
+                <div class="mt-4 p-3" style="background: #f8f9fa; border-radius: 8px;">
+                    <h5 class="mb-3">
+                        <i class="fas fa-list me-2"></i>RSVP List
+                    </h5>
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% rsvps.forEach(rsvp => { %>
+                                    <tr>
+                                        <td>
+                                            <%= rsvp.user && rsvp.user.firstname ? rsvp.user.firstname + ' ' + (rsvp.user.lastname || '') : 'Unknown User' %>
+                                        </td>
+                                        <td>
+                                            <% if(rsvp.status === 'yes') { %>
+                                                <span class="badge bg-success">Yes</span>
+                                            <% } else if(rsvp.status === 'no') { %>
+                                                <span class="badge bg-danger">No</span>
+                                            <% } else { %>
+                                                <span class="badge bg-primary">Maybe</span>
+                                            <% } %>
+                                        </td>
+                                    </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</main>
+
+<%- include('../partials/footer.ejs')%>
