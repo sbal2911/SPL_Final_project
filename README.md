@@ -21,10 +21,12 @@ The **Healthcare Behavioral Group Therapy** application is designed to support *
 - Start the server
     - cd SPL_Final_project/server/HealthcareFSharpApi
     - dotnet watch run
+You can see this output on the Swagger UI
 - Start client
     - cd SPL_Final_project/client
     - npm i (To install packages)
     - nodemon
+  The client UI will run on http://localhost:3000/
 ---
 
 ## System Architecture
