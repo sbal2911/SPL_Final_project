@@ -17,6 +17,15 @@ The **Healthcare Behavioral Group Therapy** application is designed to support *
 - Provide both a **functional F# backend API** and an **Express.js frontend** for easy access.
 
 ---
+## Instructions to run the project
+- Start the server
+    - cd SPL_Final_project/server/HealthcareFSharpApi
+    - dotnet watch run
+- Start client
+    - cd SPL_Final_project/client
+    - npm i (To install packages)
+    - nodemon
+---
 
 ## System Architecture
 
@@ -132,6 +141,7 @@ The **Healthcare Behavioral Group Therapy** application is designed to support *
 -Finalized package.json and package-lock.json.
 -Ensured all dependencies install and build correctly.
 -Verified full compatibility of Express.js modules.
+- Created UI with login and signup functionality
 
 ---
 
